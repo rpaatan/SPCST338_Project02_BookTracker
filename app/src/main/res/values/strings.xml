@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">HW04_Gymlog_V3.0.0</string>
+    <string name="reading">Reading</string>
+    <string name="to_read">To Read</string>
+    <string name="read">Read</string>
+    <string name="log_out">Log Out</string>
 </resources>
