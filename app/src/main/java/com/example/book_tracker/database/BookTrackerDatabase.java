@@ -17,7 +17,8 @@ import java.util.concurrent.Executors;
 @Database(entities = {BookTracker.class}, version = 1, exportSchema = false)
 public abstract class BookTrackerDatabase extends RoomDatabase{
 
-    private static final String DATABASE_NAME = "BookTracker_database";
+    private static final String DATABASE_NAME = "BookTrackerDatabase";
+    public static final String USER_TABLE = "usertable";
     public static final String BOOK_TRACKER_TABLE = "bookTrackerTable";
 
     private static volatile BookTrackerDatabase INSTANCE;
@@ -52,4 +53,6 @@ public abstract class BookTrackerDatabase extends RoomDatabase{
     };
 
     public abstract BookTrackerDAO booktrackerDAO();
+
+    public abstract UserDAO userDAO();
 }
