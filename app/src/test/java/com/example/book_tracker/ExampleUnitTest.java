@@ -1,4 +1,4 @@
-package com.example.hw04_gymlog_v300;
+package com.example.book_tracker;
 
 import org.junit.Test;
 

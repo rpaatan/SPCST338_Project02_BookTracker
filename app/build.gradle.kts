@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.hw04_gymlog_v300"
+    namespace = "com.example.book_tracker"
     compileSdk = 35
 
     defaultConfig {
