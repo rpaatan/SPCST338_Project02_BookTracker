@@ -7,7 +7,6 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.book_tracker.database.entities.BookTracker;
 import com.example.book_tracker.database.entities.User;
 
 import java.util.List;
