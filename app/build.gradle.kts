@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.BookTracker"
+    namespace = "com.example.book_tracker"
     compileSdk = 35
 
     defaultConfig {
