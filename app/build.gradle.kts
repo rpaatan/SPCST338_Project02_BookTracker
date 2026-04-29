@@ -7,7 +7,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.hw04_gymlog_v300"
+        applicationId = "com.example.book_tracker"
         minSdk = 34
         targetSdk = 35
         versionCode = 1
@@ -37,16 +37,15 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.androidx.appcompat)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
     implementation(libs.room.runtime)
-    annotationProcessor( libs.room.compiler)
+    annotationProcessor(libs.room.compiler)
 }

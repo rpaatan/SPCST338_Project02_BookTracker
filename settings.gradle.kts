@@ -21,4 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "BookTracker"
 include(":app")
- 
