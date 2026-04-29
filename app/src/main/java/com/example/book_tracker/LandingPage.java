@@ -1,6 +1,7 @@
 package com.example.book_tracker;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,20 +11,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LandingPage extends AppCompatActivity {
+import com.example.book_tracker.databinding.ActivityLandingPageBinding;
 
-    private Button logoutButton;
-    private Button adminButton;
-    private TextView welcomeMessage;
+public class LandingPage extends AppCompatActivity {
+    private ActivityLandingPageBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_landing_page);
-
-        logoutButton = findViewById(R.id.logoutButton);
-        adminButton = findViewById(R.id.adminButton);
-        welcomeMessage = findViewById(R.id.welcomeMessageTextView);
+        binding = ActivityLandingPageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         // Stored user data
         SharedPreferences sharedPreferences = getApplicationContext()
@@ -32,16 +29,16 @@ public class LandingPage extends AppCompatActivity {
         boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false);
 
         // Display welcome message
-        welcomeMessage.setText("Welcome, " + username + "!");
+        binding.welcomeMessageTextView.setText("Welcome, " + username + "!");
 
         // Display admin button if user is an admin
         if (isAdmin) {
-            adminButton.setVisibility(View.VISIBLE);
+            binding.adminButton.setVisibility(View.VISIBLE);
         } else {
-            adminButton.setVisibility(View.INVISIBLE);
+            binding.adminButton.setVisibility(View.INVISIBLE);
         }
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        binding.logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Update the shared preferences to indicate the user is logged out
@@ -49,13 +46,15 @@ public class LandingPage extends AppCompatActivity {
 
                 // Go back to the MainActivity
                 Intent intent = new Intent(LandingPage.this, MainActivity.class);
+                // Avoid for user to go back to landing page using back button
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             }
         });
 
         // TODO: Handle admin button click
-        adminButton.setOnClickListener(new View.OnClickListener() {
+        binding.adminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Handle admin button click
@@ -72,4 +71,9 @@ public class LandingPage extends AppCompatActivity {
         editor.putBoolean("isLoggedIn", false);
         editor.apply();
     }
+
+    public static Intent landingPageIntentFactory(Context context){
+        return new Intent(context, LandingPage.class);
+    }
+
 }
