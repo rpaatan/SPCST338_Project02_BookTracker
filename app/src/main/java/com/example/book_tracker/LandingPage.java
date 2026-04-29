@@ -7,11 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 public class LandingPage extends AppCompatActivity {
     Button button;
@@ -23,8 +18,6 @@ public class LandingPage extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Sign the user out of Firebase
-                FirebaseAuth.getInstance().signOut();
                 // Clear the shared preferences
                 updateSharedPreference("", false);
                 // Go back to the MainActivity
@@ -41,7 +34,7 @@ public class LandingPage extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("username", username);
         editor.putBoolean("isAdmin", isAdmin);
-        editor.putBoolean("isLoggedIn", true);
+        editor.putBoolean("isLoggedIn", false);
         editor.apply();
     }
 
