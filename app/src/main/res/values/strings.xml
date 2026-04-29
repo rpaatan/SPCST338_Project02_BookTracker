@@ -11,4 +11,6 @@
     <string name="login">Login</string>
     <string name="to_be_read">To be Read</string>
     <string name="preference_file_key">bookTrackerPreferenceFileName</string>
+    <string name="book_tracker">Book Tracker</string>
+    <string name="create_account">Create Account</string>
 </resources>

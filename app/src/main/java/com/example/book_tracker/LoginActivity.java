@@ -2,6 +2,7 @@ package com.example.book_tracker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -45,8 +46,21 @@ public class LoginActivity extends AppCompatActivity {
             if(user != null){
                 String password = binding.passwordLoginEditText.getText().toString();
                 if(password.equals(user.getPassword())){
-                    //TODO: uncomment when main has an intent factory
+                    // It should go to landing page instead of main activity
+                    // I modified it to go to landing page below
+//                    TODO: uncomment when main has an intent factory
 //                    startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), user.getId()));
+
+                    SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", user.getUsername());
+                    editor.putBoolean("isAdmin", user.isAdmin());
+                    editor.putBoolean("isLoggedIn", true);
+                    editor.apply();
+
+                    // Go to LandingPage
+                    startActivity(LandingPage.landingPageIntentFactory(getApplicationContext()));
+                    finish();
                 }else{
                     toastMaker("Invalid password");
                     binding.passwordLoginEditText.setSelection(0);
