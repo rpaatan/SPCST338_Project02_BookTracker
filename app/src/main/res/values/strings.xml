@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">BookTracker</string>
     <string name="welcome">Welcome!</string>
-    <string name="to_be_read">To Be Read</string>
     <string name="reading">Reading</string>
     <string name="read">Read</string>
     <string name="log_out">Log Out</string>
     <string name="is_admin">Admin</string>
+    <string name="sign_in">Sign In</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
 </resources>
