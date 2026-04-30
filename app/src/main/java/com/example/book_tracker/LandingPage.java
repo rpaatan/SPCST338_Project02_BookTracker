@@ -46,7 +46,7 @@ public class LandingPage extends AppCompatActivity {
 
                 // Go back to the MainActivity
                 Intent intent = new Intent(LandingPage.this, MainActivity.class);
-                // Avoid for user to go back to landing page using back button
+                // Avoid user to go back to landing page using back button
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();

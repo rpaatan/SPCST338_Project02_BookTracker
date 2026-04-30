@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
                 if(password.equals(user.getPassword())){
                     // It should go to landing page instead of main activity
                     // I modified it to go to landing page below
-//                    TODO: uncomment when main has an intent factory
                     startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), user.getId()));
 
                     SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
