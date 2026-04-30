@@ -25,9 +25,9 @@ public interface UserDAO {
     @Query("DELETE from " + BookTrackerDatabase.USER_TABLE)
     void deleteAll();
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.USER_TABLE)
+    @Query("SELECT * FROM " + BookTrackerDatabase.USER_TABLE + " WHERE username = :username")
     LiveData<User> getUserByUserName(String username);
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.USER_TABLE)
+    @Query("SELECT * FROM " + BookTrackerDatabase.USER_TABLE + " WHERE id = :userId")
     LiveData<User> getUserByUserId(int userId);
 }

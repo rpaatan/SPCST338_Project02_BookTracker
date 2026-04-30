@@ -12,12 +12,7 @@ import com.example.book_tracker.database.BookTrackerRepository;
 import com.example.book_tracker.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-    // Constant Fields
-    private static final String MAIN_ACTIVITY_USER_ID = "com.example.book_tracker.MAIN_ACTIVITY_USER_ID";
     private ActivityMainBinding binding;
-    private BookTrackerRepository repository;
-
-    private int loggedInUserId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,21 +21,17 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        repository = BookTrackerRepository.getRepository(getApplication());
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
 
-        // Get SharedPreferences
-        updateSharedPreference();
-
-        // Check if user is already logged in
         // If use is logged in, go to LandingPage
         // - if user is not logged in, then remain on this page.
-        if (userIsLoggedIn()) {
-            Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-            startActivity(intent);
+        if (isLoggedIn) {
+            startActivity(LandingPage.landingPageIntentFactory(this));
+            finish();
+            return;
         }
 
-        // Button Listeners
-        // Set login button listener
         binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,32 +48,11 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(SignUpActivity.loginIntentFactory(getApplicationContext()));
             }
         });
-
-        // Just comment out the CreateAccountActivity,
-        // I don't think we need to implement a functional createAcc activity
     }
 
-    private void updateSharedPreference() {
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-        sharedPrefEditor.putInt(getString(R.string.preference_userId_key), loggedInUserId);
-        sharedPrefEditor.apply();
-    }
-
-    private boolean userIsLoggedIn() {
-        return loggedInUserId == -1;
-    }
-
-    private void logInUser() {
-        loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, -1);
-    }
-
-    public static Intent mainActivityIntentFactory(Context context, int userId){
-        Intent intent = new Intent(context, MainActivity.class);
-
-        // TODO: Uncomment once UserID is functional.
-//        intent.putExtra(MAIN_ACTIVITY_USER_ID, userID);
-
+    public static Intent mainActivityIntentFactory(Context applicationContext, int id) {
+        Intent intent = new Intent(applicationContext, MainActivity.class);
+        intent.putExtra("userId", id);
         return intent;
     }
 }

@@ -18,9 +18,9 @@ public interface BookTrackerDAO {
     @Query("SELECT * FROM " + BookTrackerDatabase.BOOK_TRACKER_TABLE)
     List<BookTracker> getAllRecords();
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.BOOK_TRACKER_TABLE)
+    @Query("SELECT * FROM " + BookTrackerDatabase.BOOK_TRACKER_TABLE + " WHERE userId = :loggedInUserId")
     List<BookTracker> getRecordsByUserId(int loggedInUserId);
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.BOOK_TRACKER_TABLE)
+    @Query("SELECT * FROM " + BookTrackerDatabase.BOOK_TRACKER_TABLE + " WHERE userId = :loggedInUserId")
     LiveData<List<BookTracker>> getRecordsByUserIdLiveData(int loggedInUserId);
 }
