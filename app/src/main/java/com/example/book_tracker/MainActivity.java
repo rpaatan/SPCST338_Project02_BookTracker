@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         // If use is logged in, go to LandingPage
         // - if user is not logged in, then remain on this page.
         if (userIsLoggedIn()) {
-            Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+            Intent intent = LandingPage.landingPageIntentFactory(getApplicationContext());
             startActivity(intent);
         }
 
