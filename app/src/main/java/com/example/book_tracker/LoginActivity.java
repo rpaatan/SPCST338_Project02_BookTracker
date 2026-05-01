@@ -46,10 +46,6 @@ public class LoginActivity extends AppCompatActivity {
             if(user != null){
                 String password = binding.passwordLoginEditText.getText().toString();
                 if(password.equals(user.getPassword())){
-                    // It should go to landing page instead of main activity
-                    // I modified it to go to landing page below
-                    startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), user.getId()));
-
                     SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("username", user.getUsername());
