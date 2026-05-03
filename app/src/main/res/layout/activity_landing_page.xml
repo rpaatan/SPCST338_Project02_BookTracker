@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/welcomeMessageTextView"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:layout_marginTop="80dp"
         android:gravity="center"
         android:text="@string/welcome"
@@ -21,40 +21,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/adminButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="4dp"
         android:text="@string/is_admin"
         android:textSize="20sp"
-        android:id="@+id/adminButton"
         android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
     <Button
         android:id="@+id/TBRButton"
         android:layout_width="300dp"
         android:layout_height="60dp"
+        android:layout_marginTop="300dp"
         android:text="@string/to_be_read"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <Button
-        android:id="@+id/readingButton"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginBottom="4dp"
-        android:text="@string/reading"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@id/TBRButton"
-        app:layout_constraintStart_toStartOf="@id/TBRButton" />
 
     <Button
         android:id="@+id/readButton"
