@@ -16,13 +16,13 @@ public interface BookDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Book book);
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.BOOK_TRACKER_TABLE)
+    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE)
     List<Book> getAllRecords();
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.BOOK_TRACKER_TABLE + " WHERE userId = :loggedInUserId")
+    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE + " WHERE userId = :loggedInUserId")
     List<Book> getRecordsByUserId(int loggedInUserId);
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.BOOK_TRACKER_TABLE + " WHERE userId = :loggedInUserId")
+    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE + " WHERE userId = :loggedInUserId")
     LiveData<List<Book>> getRecordsByUserIdLiveData(int loggedInUserId);
 
     @Delete

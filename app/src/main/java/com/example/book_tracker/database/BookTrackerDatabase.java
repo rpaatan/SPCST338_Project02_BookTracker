@@ -20,7 +20,8 @@ public abstract class BookTrackerDatabase extends RoomDatabase{
 
     private static final String DATABASE_NAME = "BookTrackerDatabase";
     public static final String USER_TABLE = "usertable";
-    public static final String BOOK_TRACKER_TABLE = "bookTrackerTable";
+    public static final String TO_READ_TABLE = "toReadTable";
+    public static final String READ_TABLE = "readTable";
 
     private static volatile BookTrackerDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;

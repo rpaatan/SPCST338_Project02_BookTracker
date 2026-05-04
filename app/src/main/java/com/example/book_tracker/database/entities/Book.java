@@ -8,9 +8,8 @@ import com.example.book_tracker.database.BookTrackerDatabase;
 
 import java.util.Objects;
 
-@Entity(tableName = BookTrackerDatabase.BOOK_TRACKER_TABLE)
+@Entity(tableName = BookTrackerDatabase.TO_READ_TABLE)
 public class Book {
-    //TODO: make the whole Book Tracker POJO
     @PrimaryKey(autoGenerate = true)
     private int id;
 
