@@ -9,13 +9,13 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.book_tracker.database.entities.BookTracker;
+import com.example.book_tracker.database.entities.Book;
 import com.example.book_tracker.database.entities.User;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {BookTracker.class, User.class}, version = 1, exportSchema = false)
+@Database(entities = {Book.class, User.class}, version = 1, exportSchema = false)
 public abstract class BookTrackerDatabase extends RoomDatabase{
 
     private static final String DATABASE_NAME = "BookTrackerDatabase";
@@ -62,7 +62,7 @@ public abstract class BookTrackerDatabase extends RoomDatabase{
         }
     };
 
-    public abstract BookTrackerDAO booktrackerDAO();
+    public abstract BookDAO bookDAO();
 
     public abstract UserDAO userDAO();
 }
