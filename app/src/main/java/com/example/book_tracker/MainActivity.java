@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Comment back in once SignUpActivity is created.
-//                startActivity(SignUpActivity.loginIntentFactory(getApplicationContext()));
+                startActivity(SignUpActivity.signUpIntentFactory(getApplicationContext()));
             }
         });
     }

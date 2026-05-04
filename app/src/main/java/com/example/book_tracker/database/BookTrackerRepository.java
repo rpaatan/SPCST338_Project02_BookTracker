@@ -65,11 +65,12 @@ public class BookTrackerRepository {
         return null;
     }
 
-    public void insertGymLog(BookTracker bookTracker){
+    public void insertBook(BookTracker bookTracker){
         BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
             bookTrackerDAO.insert(bookTracker);
         });
     }
+    //TODO: add a deletebook from database - need to do it in BookDAO too
 
     public void insertUser(User... user){
         BookTrackerDatabase.databaseWriterExecutor.execute(()->
