@@ -17,23 +17,18 @@ public class Book {
     private int userId;
     private String title;
     private String author;
-    private String isbn;
     private int pageCount;
     private String startDate;
     private String endDate;
-    private String rating;
-    private String review;
+    private boolean hasRead;
 
-    public Book(int userId, String title, String author, String isbn, int pageCount, String startDate, String endDate, String rating, String review) {
+    public Book(int userId, String title, String author, int pageCount, String startDate, String endDate) {
         this.userId = userId;
         this.title = title;
         this.author = author;
-        this.isbn = isbn;
         this.pageCount = pageCount;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.rating = rating;
-        this.review = review;
     }
 
     public int getId() {
@@ -57,24 +52,21 @@ public class Book {
     public String toString() {
         return title + '\n' +
                 "By: " + author + '\n' +
-                "ISBN: " + isbn + '\n' +
                 "Page: " + pageCount +
                 "\nStarted: " + startDate + '\n' +
-                "Ended: " + endDate + '\n' +
-                "Rating: " + rating + '\n' +
-                "Review: " + review;
+                "Ended: " + endDate + '\n';
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return id == book.id && userId == book.userId && pageCount == book.pageCount && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(isbn, book.isbn) && Objects.equals(startDate, book.startDate) && Objects.equals(endDate, book.endDate) && Objects.equals(rating, book.rating) && Objects.equals(review, book.review);
+        return id == book.id && userId == book.userId && pageCount == book.pageCount && hasRead == book.hasRead && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(startDate, book.startDate) && Objects.equals(endDate, book.endDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, title, author, isbn, pageCount, startDate, endDate, rating, review);
+        return Objects.hash(id, userId, title, author, pageCount, startDate, endDate, hasRead);
     }
 
     public String getTitle() {
@@ -91,14 +83,6 @@ public class Book {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
     }
 
     public int getPageCount() {
@@ -125,19 +109,11 @@ public class Book {
         this.endDate = endDate;
     }
 
-    public String getRating() {
-        return rating;
+    public boolean isHasRead() {
+        return hasRead;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
+    public void setHasRead(boolean hasRead) {
+        this.hasRead = hasRead;
     }
 }

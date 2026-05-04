@@ -65,9 +65,15 @@ public class BookTrackerRepository {
         return null;
     }
 
-    public void insertGymLog(Book book){
+    public void insertBook(Book book){
         BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
             bookDAO.insert(book);
+        });
+    }
+
+    public void deleteBook(Book book){
+        BookTrackerDatabase.databaseWriterExecutor.execute(()->{
+            bookDAO.delete(book);
         });
     }
 
