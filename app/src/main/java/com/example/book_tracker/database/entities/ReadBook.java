@@ -8,20 +8,18 @@ import com.example.book_tracker.database.BookTrackerDatabase;
 
 import java.util.Objects;
 
-@Entity(tableName = BookTrackerDatabase.TO_READ_TABLE)
-public class Book {
+@Entity(tableName = BookTrackerDatabase.READ_TABLE)
+public class ReadBook {
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     private int userId;
     private String title;
     private String author;
     private int pageCount;
     private String startDate;
     private String endDate;
-    private boolean hasRead;
 
-    public Book(int userId, String title, String author, int pageCount, String startDate, String endDate) {
+    public ReadBook(int userId, String title, String author, int pageCount, String startDate, String endDate) {
         this.userId = userId;
         this.title = title;
         this.author = author;
@@ -59,13 +57,13 @@ public class Book {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return id == book.id && userId == book.userId && pageCount == book.pageCount && hasRead == book.hasRead && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(startDate, book.startDate) && Objects.equals(endDate, book.endDate);
+        ReadBook readBook = (ReadBook) o;
+        return id == readBook.id && userId == readBook.userId && pageCount == readBook.pageCount && Objects.equals(title, readBook.title) && Objects.equals(author, readBook.author) && Objects.equals(startDate, readBook.startDate) && Objects.equals(endDate, readBook.endDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, title, author, pageCount, startDate, endDate, hasRead);
+        return Objects.hash(id, userId, title, author, pageCount, startDate, endDate);
     }
 
     public String getTitle() {
@@ -106,13 +104,5 @@ public class Book {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
-    }
-
-    public boolean isHasRead() {
-        return hasRead;
-    }
-
-    public void setHasRead(boolean hasRead) {
-        this.hasRead = hasRead;
     }
 }
