@@ -53,11 +53,10 @@ public class LandingPage extends AppCompatActivity {
             }
         });
 
-        // TODO: Handle admin button click
         binding.adminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle admin button click
+                startActivity(new Intent(LandingPage.this, AdminPage.class));
             }
         });
     }

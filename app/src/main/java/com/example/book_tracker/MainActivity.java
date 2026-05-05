@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         binding.createAccButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Comment back in once SignUpActivity is created.
                 startActivity(SignUpActivity.signUpIntentFactory(getApplicationContext()));
             }
         });
