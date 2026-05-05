@@ -15,6 +15,9 @@ import java.util.List;
 @Dao
 public interface BookDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(ReadBook readBook);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(ToReadBook toReadBook);
 
 
@@ -29,5 +32,8 @@ public interface BookDAO {
 
     @Delete
     void delete(ToReadBook toReadBook);
+
+    @Delete
+    void delete(ReadBook readBook);
 
 }

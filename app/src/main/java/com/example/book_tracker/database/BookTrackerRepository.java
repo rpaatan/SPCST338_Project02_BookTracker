@@ -72,9 +72,21 @@ public class BookTrackerRepository {
         });
     }
 
+    public void insertBook(ReadBook readBook){
+        BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
+            bookDAO.insert(readBook);
+        });
+    }
+
     public void deleteBook(ToReadBook toReadBook){
         BookTrackerDatabase.databaseWriterExecutor.execute(()->{
             bookDAO.delete(toReadBook);
+        });
+    }
+
+    public void deleteBook(ReadBook readBook){
+        BookTrackerDatabase.databaseWriterExecutor.execute(()->{
+            bookDAO.delete(readBook);
         });
     }
 
