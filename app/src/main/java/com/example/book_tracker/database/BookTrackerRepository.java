@@ -5,7 +5,8 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.book_tracker.database.entities.Book;
+import com.example.book_tracker.database.entities.ReadBook;
+import com.example.book_tracker.database.entities.ToReadBook;
 import com.example.book_tracker.database.entities.User;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.concurrent.Future;
 public class BookTrackerRepository {
     private final BookDAO bookDAO;
     private final UserDAO userDAO;
-    private ArrayList<Book> allLogs;
+    private ArrayList<ToReadBook> allLogs;
 
     private static BookTrackerRepository repository;
 
@@ -47,12 +48,12 @@ public class BookTrackerRepository {
         return null;
     }
 
-    public ArrayList<Book> getAllLogs() {
-        Future<ArrayList<Book>> future = BookTrackerDatabase.databaseWriterExecutor.submit(
-                new Callable<ArrayList<Book>>() {
+    public ArrayList<ToReadBook> getAllLogs() {
+        Future<ArrayList<ToReadBook>> future = BookTrackerDatabase.databaseWriterExecutor.submit(
+                new Callable<ArrayList<ToReadBook>>() {
                     @Override
-                    public ArrayList<Book> call() throws Exception {
-                        return (ArrayList<Book>) bookDAO.getAllRecords();
+                    public ArrayList<ToReadBook> call() throws Exception {
+                        return (ArrayList<ToReadBook>) bookDAO.getAllRecords();
                     }
                 }
         );
@@ -66,7 +67,25 @@ public class BookTrackerRepository {
 
     public void insertBook(Book book){
         BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
-            bookDAO.insert(book);
+            bookDAO.insert(toReadBook);
+        });
+    }
+
+    public void insertBook(ReadBook readBook){
+        BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
+            bookDAO.insert(readBook);
+        });
+    }
+
+    public void deleteBook(ToReadBook toReadBook){
+        BookTrackerDatabase.databaseWriterExecutor.execute(()->{
+            bookDAO.delete(toReadBook);
+        });
+    }
+
+    public void deleteBook(ReadBook readBook){
+        BookTrackerDatabase.databaseWriterExecutor.execute(()->{
+            bookDAO.delete(readBook);
         });
     }
 
@@ -85,8 +104,12 @@ public class BookTrackerRepository {
         return userDAO.getUserByUserId(userId);
     }
 
-    public LiveData<List<Book>> getAllLogsByUserIdLiveData(int loggedInUserId){
-        return bookDAO.getRecordsByUserIdLiveData(loggedInUserId);
+    public ToReadBook getBookByTitle(String bookTitle){
+        return bookDAO.getBookByTitle(bookTitle);
+    }
+
+    public LiveData<List<ToReadBook>> getAllLogsByUsername(String loggedInUsername){
+        return bookDAO.getRecordsByUsername(loggedInUsername);
     }
 
     public LiveData<List<User>> getAllUsers() {
