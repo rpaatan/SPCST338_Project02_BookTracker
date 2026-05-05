@@ -16,16 +16,14 @@ public class ReadBook {
     private String title;
     private String author;
     private int pageCount;
-    private String startDate;
-    private String endDate;
+    private String publishDate;
 
-    public ReadBook(int userId, String title, String author, int pageCount, String startDate, String endDate) {
+    public ReadBook(int userId, String title, String author, int pageCount, String publishDate) {
         this.userId = userId;
         this.title = title;
         this.author = author;
         this.pageCount = pageCount;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.publishDate = publishDate;
     }
 
     public int getId() {
@@ -50,20 +48,19 @@ public class ReadBook {
         return title + '\n' +
                 "By: " + author + '\n' +
                 "Page: " + pageCount +
-                "\nStarted: " + startDate + '\n' +
-                "Ended: " + endDate + '\n';
+                "\nPublished: " + publishDate;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         ReadBook readBook = (ReadBook) o;
-        return id == readBook.id && userId == readBook.userId && pageCount == readBook.pageCount && Objects.equals(title, readBook.title) && Objects.equals(author, readBook.author) && Objects.equals(startDate, readBook.startDate) && Objects.equals(endDate, readBook.endDate);
+        return id == readBook.id && userId == readBook.userId && pageCount == readBook.pageCount && Objects.equals(title, readBook.title) && Objects.equals(author, readBook.author) && Objects.equals(publishDate, readBook.publishDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, title, author, pageCount, startDate, endDate);
+        return Objects.hash(id, userId, title, author, pageCount, publishDate);
     }
 
     public String getTitle() {
@@ -90,19 +87,11 @@ public class ReadBook {
         this.pageCount = pageCount;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getPublishDate() {
+        return publishDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
     }
 }

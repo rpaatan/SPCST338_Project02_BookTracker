@@ -24,11 +24,14 @@ public interface BookDAO {
     @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE)
     List<ToReadBook> getAllRecords();
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE + " WHERE userId = :loggedInUserId")
-    List<ToReadBook> getRecordsByUserId(int loggedInUserId);
+    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE + " WHERE username = :loggedInUsername")
+    LiveData<List<ToReadBook>> getRecordsByUsername(String loggedInUsername);
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE + " WHERE userId = :loggedInUserId")
-    LiveData<List<ToReadBook>> getRecordsByUserIdLiveData(int loggedInUserId);
+    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE + " WHERE title = :bookTitle")
+    ToReadBook getBookByTitle(String bookTitle);
+
+    @Query("SELECT * FROM " + BookTrackerDatabase.READ_TABLE + " WHERE title = :bookTitle")
+    ReadBook getReadBookByTitle(String bookTitle);
 
     @Delete
     void delete(ToReadBook toReadBook);
