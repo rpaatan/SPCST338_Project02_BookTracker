@@ -105,7 +105,11 @@ public class BookTrackerRepository {
         return userDAO.getUserByUserId(userId);
     }
 
-    public LiveData<List<ToReadBook>> getAllLogsByUserIdLiveData(int loggedInUserId){
-        return bookDAO.getRecordsByUserIdLiveData(loggedInUserId);
+    public ToReadBook getBookByTitle(String bookTitle){
+        return bookDAO.getBookByTitle(bookTitle);
+    }
+
+    public LiveData<List<ToReadBook>> getAllLogsByUsername(String loggedInUsername){
+        return bookDAO.getRecordsByUsername(loggedInUsername);
     }
 }

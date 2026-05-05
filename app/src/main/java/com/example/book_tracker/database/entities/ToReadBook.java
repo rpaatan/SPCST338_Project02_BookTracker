@@ -17,16 +17,14 @@ public class ToReadBook {
     private String title;
     private String author;
     private int pageCount;
-    private String startDate;
-    private String endDate;
+    private String publishDate;
 
-    public ToReadBook(int userId, String title, String author, int pageCount, String startDate, String endDate) {
-        this.userId = userId;
+    public ToReadBook(/*int userId,*/ String title, String author, int pageCount, String publishDate) {
+//        this.userId = userId;
         this.title = title;
         this.author = author;
         this.pageCount = pageCount;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.publishDate = publishDate;
     }
 
     public int getId() {
@@ -51,20 +49,19 @@ public class ToReadBook {
         return title + '\n' +
                 "By: " + author + '\n' +
                 "Page: " + pageCount +
-                "\nStarted: " + startDate + '\n' +
-                "Ended: " + endDate + '\n';
+                "\nPublished: " + publishDate;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         ToReadBook toReadBook = (ToReadBook) o;
-        return id == toReadBook.id && userId == toReadBook.userId && pageCount == toReadBook.pageCount && Objects.equals(title, toReadBook.title) && Objects.equals(author, toReadBook.author) && Objects.equals(startDate, toReadBook.startDate) && Objects.equals(endDate, toReadBook.endDate);
+        return id == toReadBook.id && userId == toReadBook.userId && pageCount == toReadBook.pageCount && Objects.equals(title, toReadBook.title) && Objects.equals(author, toReadBook.author) && Objects.equals(publishDate, toReadBook.publishDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, title, author, pageCount, startDate, endDate);
+        return Objects.hash(id, userId, title, author, pageCount, publishDate);
     }
 
     public String getTitle() {
@@ -91,20 +88,12 @@ public class ToReadBook {
         this.pageCount = pageCount;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getPublishDate() {
+        return publishDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
     }
 
 }
