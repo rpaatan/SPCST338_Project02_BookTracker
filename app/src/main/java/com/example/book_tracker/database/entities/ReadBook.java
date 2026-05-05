@@ -18,12 +18,23 @@ public class ReadBook {
     private int pageCount;
     private String publishDate;
 
+    private float rating;
+
+    private String review;
+    private String startDate;
+
+    private String endDate;
+
     public ReadBook(int userId, String title, String author, int pageCount, String publishDate) {
         this.userId = userId;
         this.title = title;
         this.author = author;
         this.pageCount = pageCount;
         this.publishDate = publishDate;
+        this.rating = 0;
+        this.review = "";
+        this.startDate = "";
+        this.endDate = "";
     }
 
     public int getId() {
@@ -93,5 +104,37 @@ public class ReadBook {
 
     public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

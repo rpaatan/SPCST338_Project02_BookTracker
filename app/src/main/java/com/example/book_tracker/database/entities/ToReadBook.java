@@ -13,14 +13,12 @@ public class ToReadBook {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private int userId;
     private String title;
     private String author;
     private int pageCount;
     private String publishDate;
 
-    public ToReadBook(/*int userId,*/ String title, String author, int pageCount, String publishDate) {
-//        this.userId = userId;
+    public ToReadBook(String title, String author, int pageCount, String publishDate) {
         this.title = title;
         this.author = author;
         this.pageCount = pageCount;
@@ -33,14 +31,6 @@ public class ToReadBook {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     @NonNull
@@ -56,12 +46,12 @@ public class ToReadBook {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         ToReadBook toReadBook = (ToReadBook) o;
-        return id == toReadBook.id && userId == toReadBook.userId && pageCount == toReadBook.pageCount && Objects.equals(title, toReadBook.title) && Objects.equals(author, toReadBook.author) && Objects.equals(publishDate, toReadBook.publishDate);
+        return id == toReadBook.id && pageCount == toReadBook.pageCount && Objects.equals(title, toReadBook.title) && Objects.equals(author, toReadBook.author) && Objects.equals(publishDate, toReadBook.publishDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, title, author, pageCount, publishDate);
+        return Objects.hash(id, title, author, pageCount, publishDate);
     }
 
     public String getTitle() {

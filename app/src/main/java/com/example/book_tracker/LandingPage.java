@@ -56,7 +56,22 @@ public class LandingPage extends AppCompatActivity {
         binding.adminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LandingPage.this, AdminPage.class));
+                Intent intent = new Intent(LandingPage.this, AdminPage.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.TBRButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(ToReadActivity.ToReadActivityIntentFactory(getApplicationContext()));
+            }
+        });
+
+        binding.readButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(ReadActivity.ReadActivityIntentFactory(getApplicationContext()));
             }
         });
     }

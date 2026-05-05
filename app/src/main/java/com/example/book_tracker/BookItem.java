@@ -39,23 +39,20 @@ public class BookItem extends AppCompatActivity {
         repository = BookTrackerRepository.getRepository(getApplication());
         username = getResources().getString(R.string.username);
 
-        binding.addBookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getInformationFromDisplay();
-                insertBookItem();
-                toDisplay();
-            }
+        binding.addBookButton.setOnClickListener(view -> {
+            getInformationFromDisplay();
+            insertBookItem();
         });
     }
 
     private void insertBookItem(){
-        if(mTitle.isEmpty()){
+        if(mTitle.trim().isEmpty()){
             return;
         }
 
         ToReadBook book = new ToReadBook(mTitle,mAuthor,mPageCount,mPublishDate);
         repository.insertBook(book);
+        finish();
     }
 
     private void getInformationFromDisplay(){
@@ -67,13 +64,6 @@ public class BookItem extends AppCompatActivity {
         }catch(NumberFormatException e){
             Log.d("DAC_BOOKTRACKER", "Error reading value from Page Count edit text.");
         }
-    }
-
-    //sends to display activity
-    private void toDisplay(){
-        Intent intent = BookItemDisplay.bookItemDisplayIntentFactory(this);
-        intent.putExtra("title", mTitle);
-        startActivity(intent);
     }
 
     static Intent bookItemIntentFactory(Context context){

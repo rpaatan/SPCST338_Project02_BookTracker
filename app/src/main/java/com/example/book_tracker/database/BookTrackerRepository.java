@@ -65,7 +65,7 @@ public class BookTrackerRepository {
         return null;
     }
 
-    public void insertBook(Book book){
+    public void insertBook(ToReadBook toReadBook){
         BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
             bookDAO.insert(toReadBook);
         });
@@ -109,7 +109,7 @@ public class BookTrackerRepository {
     }
 
     public LiveData<List<ToReadBook>> getAllLogsByUsername(String loggedInUsername){
-        return bookDAO.getRecordsByUsername(loggedInUsername);
+        return bookDAO.getAllToReadBooks();
     }
 
     public LiveData<List<User>> getAllUsers() {
@@ -119,5 +119,19 @@ public class BookTrackerRepository {
         BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
             userDAO.delete(user);
         });
+    }
+
+    public ReadBook getReadBookByTitle(String bookTitle) {
+        return bookDAO.getReadBookByTitle(bookTitle);
+    }
+
+    public void updateBook(ReadBook book) {
+        BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
+            bookDAO.update(book);
+        });
+    }
+
+    public LiveData<List<ReadBook>> getAllReadBooks() {
+        return bookDAO.getAllReadBooks();
     }
 }

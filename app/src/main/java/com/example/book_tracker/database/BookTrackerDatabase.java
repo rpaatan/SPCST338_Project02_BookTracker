@@ -16,7 +16,7 @@ import com.example.book_tracker.database.entities.User;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {ToReadBook.class, User.class, ReadBook.class}, version = 1, exportSchema = false)
+@Database(entities = {ToReadBook.class, User.class, ReadBook.class}, version = 3, exportSchema = false)
 public abstract class BookTrackerDatabase extends RoomDatabase{
 
     private static final String DATABASE_NAME = "BookTrackerDatabase";

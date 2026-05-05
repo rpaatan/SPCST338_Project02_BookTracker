@@ -18,4 +18,9 @@
     <string name="current_users">Current Users</string>
     <string name="delete">Delete</string>
     <string name="back">Back</string>
+    <string name="write_your_review">Write your review</string>
+    <string name="save">Save</string>
+    <string name="book_information">Book information</string>
+    <string name="mark_as_read">Mark as Read</string>
+    <string name="book_info">Book Info</string>
 </resources>
