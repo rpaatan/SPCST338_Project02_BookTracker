@@ -23,4 +23,5 @@
     <string name="book_information">Book information</string>
     <string name="mark_as_read">Mark as Read</string>
     <string name="book_info">Book Info</string>
+    <string name="add_book">Add Book</string>
 </resources>

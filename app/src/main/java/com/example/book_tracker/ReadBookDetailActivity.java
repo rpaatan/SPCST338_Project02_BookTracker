@@ -6,17 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.book_tracker.database.BookTrackerRepository;
 import com.example.book_tracker.database.entities.ReadBook;
-import com.example.book_tracker.databinding.ActivityReadBookDetailBinding;
+import com.example.book_tracker.databinding.ActivityRatingBinding;
 
 public class ReadBookDetailActivity extends AppCompatActivity {
-    private ActivityReadBookDetailBinding binding;
+    private ActivityRatingBinding binding;
     private BookTrackerRepository repository;
     private ReadBook book;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityReadBookDetailBinding.inflate(getLayoutInflater());
+        binding = ActivityRatingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         repository = BookTrackerRepository.getRepository(getApplication());

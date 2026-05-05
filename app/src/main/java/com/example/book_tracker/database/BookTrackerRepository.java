@@ -29,23 +29,28 @@ public class BookTrackerRepository {
     }
 
     public static BookTrackerRepository getRepository(Application application){
-        if (repository != null){
-            return repository;
+//        if (repository != null){
+//            return repository;
+//        }
+//        Future<BookTrackerRepository> future = BookTrackerDatabase.databaseWriterExecutor.submit(
+//                new Callable<BookTrackerRepository>() {
+//                    @Override
+//                    public BookTrackerRepository call() throws Exception {
+//                        return new BookTrackerRepository(application);
+//                    }
+//                }
+//        );
+//        try{
+//            return future.get();
+//        }catch(InterruptedException | ExecutionException e){
+//            Log.d("DAC_BOOKTRACKER", "Problem getting GymLogRepository, thread error.");
+//        }
+//        return null;
+
+        if (repository == null){
+            repository = new BookTrackerRepository(application);
         }
-        Future<BookTrackerRepository> future = BookTrackerDatabase.databaseWriterExecutor.submit(
-                new Callable<BookTrackerRepository>() {
-                    @Override
-                    public BookTrackerRepository call() throws Exception {
-                        return new BookTrackerRepository(application);
-                    }
-                }
-        );
-        try{
-            return future.get();
-        }catch(InterruptedException | ExecutionException e){
-            Log.d("DAC_BOOKTRACKER", "Problem getting GymLogRepository, thread error.");
-        }
-        return null;
+        return repository;
     }
 
     public ArrayList<ToReadBook> getAllLogs() {
@@ -105,7 +110,17 @@ public class BookTrackerRepository {
     }
 
     public ToReadBook getBookByTitle(String bookTitle){
-        return bookDAO.getBookByTitle(bookTitle);
+        Future<ToReadBook> future = BookTrackerDatabase.databaseWriterExecutor.submit(() -> {
+            return bookDAO.getBookByTitle(bookTitle);
+        });
+
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i("DAC_BOOKTRACKER", "Problem getting book by title");
+        }
+
+        return null;
     }
 
     public LiveData<List<ToReadBook>> getAllLogsByUsername(String loggedInUsername){

@@ -52,6 +52,10 @@ public class BookItemDisplay extends AppCompatActivity {
             repository.insertBook(readBook);
             repository.deleteBook(toReadBook);
 
+            Intent intent = new Intent(BookItemDisplay.this, RatingActivity.class);
+            intent.putExtra("title", toReadBook.getTitle());
+            startActivity(intent);
+
             finish();
         });
 

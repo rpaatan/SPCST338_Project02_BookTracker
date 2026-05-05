@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +41,7 @@ public class BookItem extends AppCompatActivity {
         username = getResources().getString(R.string.username);
 
         binding.addBookButton.setOnClickListener(view -> {
+            Toast.makeText(BookItem.this, "Save clicked", Toast.LENGTH_SHORT).show();
             getInformationFromDisplay();
             insertBookItem();
         });
@@ -47,6 +49,7 @@ public class BookItem extends AppCompatActivity {
 
     private void insertBookItem(){
         if(mTitle.trim().isEmpty()){
+            Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
             return;
         }
 

@@ -3,6 +3,8 @@ package com.example.book_tracker;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -37,21 +39,25 @@ public class ToReadActivity extends AppCompatActivity {
 
         repository = BookTrackerRepository.getRepository(getApplication());
 
-        repository.getAllLogsByUsername("").observe(this, books -> {
-            toRead_TitleList = new ArrayList<>();
-            for (ToReadBook book : books) {
-                toRead_TitleList.add(book.getTitle());
-            }
-            setAdapter();
-        });
-
         binding.recyclerBackButton.setOnClickListener(view -> {
             finish();
         });
 
         binding.addBookButton.setOnClickListener(view -> {
-            startActivity(BookItem.bookItemIntentFactory(this));
+            Toast.makeText(this, "Add Book clicked", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(ToReadActivity.this, BookItem.class));
         });
+
+        repository.getAllLogsByUsername("").observe(this, books -> {
+            toRead_TitleList = new ArrayList<>();
+            if (books != null) {
+                for (ToReadBook book : books) {
+                    toRead_TitleList.add(book.getTitle());
+                }
+            }
+            setAdapter();
+        });
+
     }
 
     private void setAdapter() {
