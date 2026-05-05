@@ -15,4 +15,5 @@
     <string name="create_account">Create Account</string>
     <string name="preference_usrt_key">PreferenceUserIDKeyBookTracker</string>
     <string name="preference_userId_key">preferenceUserIdKeyBookTracker</string>
+    <string name="back">Back</string>
 </resources>
