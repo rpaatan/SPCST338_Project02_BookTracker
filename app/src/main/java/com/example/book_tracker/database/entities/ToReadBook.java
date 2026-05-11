@@ -15,12 +15,15 @@ public class ToReadBook {
 
     private String title;
     private String author;
+
+    public int userId;
     private int pageCount;
     private String publishDate;
 
-    public ToReadBook(String title, String author, int pageCount, String publishDate) {
+    public ToReadBook(String title, String author, int userId, int pageCount, String publishDate) {
         this.title = title;
         this.author = author;
+        this.userId = userId;
         this.pageCount = pageCount;
         this.publishDate = publishDate;
     }
@@ -46,12 +49,12 @@ public class ToReadBook {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         ToReadBook toReadBook = (ToReadBook) o;
-        return id == toReadBook.id && pageCount == toReadBook.pageCount && Objects.equals(title, toReadBook.title) && Objects.equals(author, toReadBook.author) && Objects.equals(publishDate, toReadBook.publishDate);
+        return id == toReadBook.id && userId == toReadBook.userId && pageCount == toReadBook.pageCount && Objects.equals(title, toReadBook.title) && Objects.equals(author, toReadBook.author) && Objects.equals(publishDate, toReadBook.publishDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, pageCount, publishDate);
+        return Objects.hash(id, title, author, userId, pageCount, publishDate);
     }
 
     public String getTitle() {
@@ -70,6 +73,14 @@ public class ToReadBook {
         this.author = author;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public int getPageCount() {
         return pageCount;
     }
@@ -85,5 +96,4 @@ public class ToReadBook {
     public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
     }
-
 }

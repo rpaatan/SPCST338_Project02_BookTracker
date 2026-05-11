@@ -15,26 +15,26 @@ import java.util.List;
 
 @Dao
 public interface BookDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insert(ReadBook readBook);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insert(ToReadBook toReadBook);
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE)
-    List<ToReadBook> getAllRecords();
+    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE + " WHERE userId = :userId")
+    List<ToReadBook> getAllRecords(int userId);
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE)
-    LiveData<List<ToReadBook>> getAllToReadBooks();
+    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE + " WHERE userId = :userId")
+    LiveData<List<ToReadBook>> getAllToReadBooks(int userId);
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE + " WHERE title = :bookTitle")
-    ToReadBook getBookByTitle(String bookTitle);
+    @Query("SELECT * FROM " + BookTrackerDatabase.TO_READ_TABLE + " WHERE title = :bookTitle AND userId = :userId LIMIT 1")
+    ToReadBook getBookByTitle(String bookTitle, int userId);
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.READ_TABLE + " WHERE title = :bookTitle")
-    ReadBook getReadBookByTitle(String bookTitle);
+    @Query("SELECT * FROM " + BookTrackerDatabase.READ_TABLE + " WHERE title = :bookTitle AND userId = :userId LIMIT 1")
+    ReadBook getReadBookByTitle(String bookTitle, int userId);
 
-    @Query("SELECT * FROM " + BookTrackerDatabase.READ_TABLE)
-    LiveData<List<ReadBook>> getAllReadBooks();
+    @Query("SELECT * FROM " + BookTrackerDatabase.READ_TABLE + " WHERE userId = :userId")
+    LiveData<List<ReadBook>> getAllReadBooks(int userId);
 
     @Delete
     void delete(ToReadBook toReadBook);

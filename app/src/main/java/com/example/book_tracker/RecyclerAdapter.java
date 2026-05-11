@@ -35,8 +35,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @NonNull
     @Override
     public RecyclerAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate
-                (R.layout.recycler_template, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recycler_template, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -47,12 +47,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         holder.titleText.setText(title);
 
         holder.itemView.setOnClickListener(v -> {
-            listener.onItemClick(title);
+            if (listener != null) {
+                int pos = holder.getAdapterPosition();
+
+                if (pos != RecyclerView.NO_POSITION) {
+                    listener.onItemClick(stringsListTemp.get(pos));
+                }
+            }
         });
     }
 
     @Override
     public int getItemCount() {
-        return stringsListTemp.size();
+        return stringsListTemp != null ? stringsListTemp.size() : 0;
     }
 }

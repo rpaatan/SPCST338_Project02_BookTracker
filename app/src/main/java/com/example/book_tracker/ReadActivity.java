@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -18,11 +19,12 @@ import com.example.book_tracker.databinding.ActivityReadBinding;
 import java.util.ArrayList;
 
 public class ReadActivity extends AppCompatActivity {
-    // TODO: replace with a list of titles from the DAO.
     private ArrayList<String> Read_TitleList;
     private ActivityReadBinding binding;
     private RecyclerView recyclerView;
     private BookTrackerRepository repository;
+    public static final String USER_ID_KEY = "USER_ID";
+    public int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,14 @@ public class ReadActivity extends AppCompatActivity {
 
         binding = ActivityReadBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        userId = getIntent().getIntExtra(USER_ID_KEY, -1);
+
+        if(userId == -1){
+            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         recyclerView = binding.recyclerList;
 
@@ -39,10 +49,12 @@ public class ReadActivity extends AppCompatActivity {
 
         repository = BookTrackerRepository.getRepository(getApplication());
 
-        repository.getAllReadBooks().observe(this, books -> {
+        repository.getAllReadBooks(userId).observe(this, books -> {
             Read_TitleList = new ArrayList<>();
-            for (ReadBook book : books) {
-                Read_TitleList.add(book.getTitle());
+            if(books != null){
+                for(ReadBook book : books){
+                    Read_TitleList.add(book.getTitle());
+                }
             }
             setAdapter();
         });
@@ -54,15 +66,17 @@ public class ReadActivity extends AppCompatActivity {
     }
     private void setAdapter() {
         RecyclerAdapter adapter = new RecyclerAdapter(Read_TitleList, title -> {
-            Intent intent = new Intent(ReadActivity.this, ReadBookDetailActivity.class);
+            Intent intent = new Intent(ReadActivity.this, RatingActivity.class);
             intent.putExtra("title", title);
+            intent.putExtra(USER_ID_KEY, userId);
             startActivity(intent);
         });
         recyclerView.setAdapter(adapter);
     }
 
-    public static Intent ReadActivityIntentFactory(Context applicationContext) {
+    public static Intent ReadActivityIntentFactory(Context applicationContext, int userId) {
         Intent intent = new Intent(applicationContext, ReadActivity.class);
+        intent.putExtra(USER_ID_KEY, userId);
         return intent;
     }
 }

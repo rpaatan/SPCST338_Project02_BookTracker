@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,8 +30,8 @@ public class BookItemDisplay extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         repository = BookTrackerRepository.getRepository(getApplication());
-
-        toReadBook = repository.getBookByTitle(title);
+        int userId = getIntent().getIntExtra("USER_ID", -1);
+        toReadBook = repository.getBookByTitle(title, userId);
 
         if(toReadBook == null){
             binding.displayBookItemTextView.setText("Book not found.");
@@ -42,7 +43,7 @@ public class BookItemDisplay extends AppCompatActivity {
 
         binding.markReadButton.setOnClickListener(view -> {
             ReadBook readBook = new ReadBook(
-                    0,
+                    userId,
                     toReadBook.getTitle(),
                     toReadBook.getAuthor(),
                     toReadBook.getPageCount(),
@@ -52,22 +53,23 @@ public class BookItemDisplay extends AppCompatActivity {
             repository.insertBook(readBook);
             repository.deleteBook(toReadBook);
 
-            Intent intent = new Intent(BookItemDisplay.this, RatingActivity.class);
-            intent.putExtra("title", toReadBook.getTitle());
-            startActivity(intent);
+            Toast.makeText(this, "Book marked as read", Toast.LENGTH_SHORT).show();
+
+            startActivity(ReadActivity.ReadActivityIntentFactory(BookItemDisplay.this, userId));
+            finish();
 
             finish();
         });
 
-        binding.backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(LandingPage.landingPageIntentFactory(getApplicationContext()));
-            }
+        binding.backButton.setOnClickListener(view -> {
+            finish();
         });
     }
 
-    static Intent bookItemDisplayIntentFactory(Context context){
-        return new Intent(context, BookItemDisplay.class);
+    static Intent bookItemDisplayIntentFactory(Context context, String title, int userId){
+        Intent intent = new Intent(context, BookItemDisplay.class);
+        intent.putExtra("title", title);
+        intent.putExtra("USER_ID", userId);
+        return intent;
     }
 }

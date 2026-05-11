@@ -3,7 +3,6 @@ package com.example.book_tracker;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +21,9 @@ public class ToReadActivity extends AppCompatActivity {
     private ActivityToReadBinding binding;
     private RecyclerView recyclerView;
     private BookTrackerRepository repository;
+    private int userId;
 
+    public static final String USER_ID_KEY = "USER_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,14 @@ public class ToReadActivity extends AppCompatActivity {
 
         binding = ActivityToReadBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        userId = getIntent().getIntExtra(USER_ID_KEY, -1);
+
+        if (userId == -1) {
+            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         recyclerView = binding.recyclerList;
 
@@ -39,37 +48,41 @@ public class ToReadActivity extends AppCompatActivity {
 
         repository = BookTrackerRepository.getRepository(getApplication());
 
+        binding.addBookButton.setOnClickListener(view -> {
+            Toast.makeText(ToReadActivity.this, "Add clicked userId = " + userId, Toast.LENGTH_SHORT).show();
+
+            Intent intent = BookItem.bookItemIntentFactory(ToReadActivity.this, userId);
+            startActivity(intent);
+        });
+
         binding.recyclerBackButton.setOnClickListener(view -> {
             finish();
         });
 
-        binding.addBookButton.setOnClickListener(view -> {
-            Toast.makeText(this, "Add Book clicked", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(ToReadActivity.this, BookItem.class));
-        });
-
-        repository.getAllLogsByUsername("").observe(this, books -> {
+        repository.getAllToReadBooks(userId).observe(this, books -> {
             toRead_TitleList = new ArrayList<>();
+
             if (books != null) {
                 for (ToReadBook book : books) {
                     toRead_TitleList.add(book.getTitle());
                 }
             }
+
             setAdapter();
         });
-
     }
 
     private void setAdapter() {
         RecyclerAdapter adapter = new RecyclerAdapter(toRead_TitleList, title -> {
-            Intent intent = new Intent(ToReadActivity.this, BookItemDisplay.class);
-            intent.putExtra("title", title);
-            startActivity(intent);
+            startActivity(BookItemDisplay.bookItemDisplayIntentFactory(ToReadActivity.this, title, userId));
         });
+
         recyclerView.setAdapter(adapter);
     }
 
-    public static Intent ToReadActivityIntentFactory(Context context) {
-        return new Intent(context, ToReadActivity.class);
+    public static Intent ToReadActivityIntentFactory(Context context, int userId) {
+        Intent intent = new Intent(context, ToReadActivity.class);
+        intent.putExtra(USER_ID_KEY, userId);
+        return intent;
     }
 }

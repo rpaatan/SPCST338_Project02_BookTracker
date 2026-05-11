@@ -26,6 +26,13 @@ public class LandingPage extends AppCompatActivity {
         SharedPreferences sharedPreferences = getApplicationContext()
                 .getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "User");
+
+        int userId = sharedPreferences.getInt("userId", -1);
+
+        if (userId == -1) {
+            binding.welcomeMessageTextView.setText("Login error: userId not saved.");
+        }
+
         boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false);
 
         // Display welcome message
@@ -61,18 +68,12 @@ public class LandingPage extends AppCompatActivity {
             }
         });
 
-        binding.TBRButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(ToReadActivity.ToReadActivityIntentFactory(getApplicationContext()));
-            }
+        binding.TBRButton.setOnClickListener(view -> {
+            startActivity(ToReadActivity.ToReadActivityIntentFactory(getApplicationContext(), userId));
         });
 
-        binding.readButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(ReadActivity.ReadActivityIntentFactory(getApplicationContext()));
-            }
+        binding.readButton.setOnClickListener(view -> {
+            startActivity(ReadActivity.ReadActivityIntentFactory(getApplicationContext(), userId));
         });
     }
 
@@ -83,11 +84,11 @@ public class LandingPage extends AppCompatActivity {
         editor.putString("username", username);
         editor.putBoolean("isAdmin", isAdmin);
         editor.putBoolean("isLoggedIn", false);
+        editor.putInt("userId", -1);
         editor.apply();
     }
 
     public static Intent landingPageIntentFactory(Context context){
         return new Intent(context, LandingPage.class);
     }
-
 }

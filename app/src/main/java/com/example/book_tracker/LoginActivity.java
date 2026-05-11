@@ -43,18 +43,25 @@ public class LoginActivity extends AppCompatActivity {
         }
         LiveData<User> userObserver = repository.getUserByUserName(username);
         userObserver.observe(this, user -> {
+            userObserver.removeObservers(this);
             if(user != null){
                 String password = binding.passwordLoginEditText.getText().toString();
                 if(password.equals(user.getPassword())){
+                    if (user.getId() <= 0) {
+                        toastMaker("Login error: user ID was not found.");
+                        return;
+                    }
+
                     SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("username", user.getUsername());
                     editor.putBoolean("isAdmin", user.isAdmin());
                     editor.putBoolean("isLoggedIn", true);
+                    editor.putInt("userId", user.getId());
                     editor.apply();
 
                     // Go to LandingPage
-                    startActivity(LandingPage.landingPageIntentFactory(getApplicationContext()));
+                    startActivity(LandingPage.landingPageIntentFactory(LoginActivity.this));
                     finish();
                 }else{
                     toastMaker("Invalid password");

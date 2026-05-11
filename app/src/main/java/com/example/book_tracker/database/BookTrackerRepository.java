@@ -18,7 +18,6 @@ import java.util.concurrent.Future;
 public class BookTrackerRepository {
     private final BookDAO bookDAO;
     private final UserDAO userDAO;
-    private ArrayList<ToReadBook> allLogs;
 
     private static BookTrackerRepository repository;
 
@@ -29,74 +28,89 @@ public class BookTrackerRepository {
     }
 
     public static BookTrackerRepository getRepository(Application application){
-//        if (repository != null){
-//            return repository;
-//        }
-//        Future<BookTrackerRepository> future = BookTrackerDatabase.databaseWriterExecutor.submit(
-//                new Callable<BookTrackerRepository>() {
-//                    @Override
-//                    public BookTrackerRepository call() throws Exception {
-//                        return new BookTrackerRepository(application);
-//                    }
-//                }
-//        );
-//        try{
-//            return future.get();
-//        }catch(InterruptedException | ExecutionException e){
-//            Log.d("DAC_BOOKTRACKER", "Problem getting GymLogRepository, thread error.");
-//        }
-//        return null;
-
-        if (repository == null){
+        if(repository == null){
             repository = new BookTrackerRepository(application);
         }
         return repository;
     }
 
-    public ArrayList<ToReadBook> getAllLogs() {
-        Future<ArrayList<ToReadBook>> future = BookTrackerDatabase.databaseWriterExecutor.submit(
-                new Callable<ArrayList<ToReadBook>>() {
-                    @Override
-                    public ArrayList<ToReadBook> call() throws Exception {
-                        return (ArrayList<ToReadBook>) bookDAO.getAllRecords();
-                    }
-                }
-        );
-        try{
+    public ArrayList<ToReadBook> getAllLogs(int userId) {
+        Future<ArrayList<ToReadBook>> future =
+                BookTrackerDatabase.databaseWriterExecutor.submit(() ->
+                        new ArrayList<>(bookDAO.getAllRecords(userId))
+                );
+        try {
             return future.get();
-        }catch (InterruptedException | ExecutionException e){
-            Log.i("DAC_BOOKTRACKER", "Problem when getting all Books in the repository");
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i("DAC_BOOKTRACKER", "Problem getting all books in the repository");
         }
         return null;
     }
 
-    public void insertBook(ToReadBook toReadBook){
-        BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
+    public LiveData<List<ToReadBook>> getAllToReadBooks(int userId) {
+        return bookDAO.getAllToReadBooks(userId);
+    }
+
+    public LiveData<List<ReadBook>> getAllReadBooks(int userId) {
+        return bookDAO.getAllReadBooks(userId);
+    }
+
+    public ToReadBook getBookByTitle(String bookTitle, int userId){
+        Future<ToReadBook> future =
+                BookTrackerDatabase.databaseWriterExecutor.submit(() ->
+                        bookDAO.getBookByTitle(bookTitle, userId));
+        try{
+            return future.get();
+        }catch(InterruptedException | ExecutionException e){
+            Log.i("DAC_BOOKTRACKER", "Problem getting to-read book by title");
+        }
+        return null;
+    }
+
+    public ReadBook getReadBookByTitle(String bookTitle, int userId){
+        Future<ReadBook> future =
+                BookTrackerDatabase.databaseWriterExecutor.submit(() ->
+                        bookDAO.getReadBookByTitle(bookTitle, userId));
+        try{
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i("DAC_BOOKTRACKER", "Problem getting read book by title");
+        }
+        return null;
+    }
+
+    public void insertBook(ToReadBook toReadBook) {
+        BookTrackerDatabase.databaseWriterExecutor.execute(() -> {
             bookDAO.insert(toReadBook);
         });
     }
 
-    public void insertBook(ReadBook readBook){
-        BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
+    public void insertBook(ReadBook readBook) {
+        BookTrackerDatabase.databaseWriterExecutor.execute(() -> {
             bookDAO.insert(readBook);
         });
     }
 
-    public void deleteBook(ToReadBook toReadBook){
-        BookTrackerDatabase.databaseWriterExecutor.execute(()->{
+    public void deleteBook(ToReadBook toReadBook) {
+        BookTrackerDatabase.databaseWriterExecutor.execute(() -> {
             bookDAO.delete(toReadBook);
         });
     }
 
-    public void deleteBook(ReadBook readBook){
-        BookTrackerDatabase.databaseWriterExecutor.execute(()->{
+    public void deleteBook(ReadBook readBook) {
+        BookTrackerDatabase.databaseWriterExecutor.execute(() -> {
             bookDAO.delete(readBook);
         });
     }
 
-    public void insertUser(User... user){
-        BookTrackerDatabase.databaseWriterExecutor.execute(()->
-        {
+    public void updateBook(ReadBook book) {
+        BookTrackerDatabase.databaseWriterExecutor.execute(() -> {
+            bookDAO.update(book);
+        });
+    }
+
+    public void insertUser(User... user) {
+        BookTrackerDatabase.databaseWriterExecutor.execute(() -> {
             userDAO.insert(user);
         });
     }
@@ -109,44 +123,13 @@ public class BookTrackerRepository {
         return userDAO.getUserByUserId(userId);
     }
 
-    public ToReadBook getBookByTitle(String bookTitle){
-        Future<ToReadBook> future = BookTrackerDatabase.databaseWriterExecutor.submit(() -> {
-            return bookDAO.getBookByTitle(bookTitle);
-        });
-
-        try {
-            return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            Log.i("DAC_BOOKTRACKER", "Problem getting book by title");
-        }
-
-        return null;
-    }
-
-    public LiveData<List<ToReadBook>> getAllLogsByUsername(String loggedInUsername){
-        return bookDAO.getAllToReadBooks();
-    }
-
     public LiveData<List<User>> getAllUsers() {
         return userDAO.getAllUsers();
     }
+
     public void deleteUser(User user) {
-        BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
+        BookTrackerDatabase.databaseWriterExecutor.execute(() -> {
             userDAO.delete(user);
         });
-    }
-
-    public ReadBook getReadBookByTitle(String bookTitle) {
-        return bookDAO.getReadBookByTitle(bookTitle);
-    }
-
-    public void updateBook(ReadBook book) {
-        BookTrackerDatabase.databaseWriterExecutor.execute(()-> {
-            bookDAO.update(book);
-        });
-    }
-
-    public LiveData<List<ReadBook>> getAllReadBooks() {
-        return bookDAO.getAllReadBooks();
     }
 }

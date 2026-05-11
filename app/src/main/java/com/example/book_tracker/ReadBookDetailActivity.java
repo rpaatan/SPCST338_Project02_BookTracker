@@ -22,7 +22,8 @@ public class ReadBookDetailActivity extends AppCompatActivity {
         repository = BookTrackerRepository.getRepository(getApplication());
 
         String bookTitle = getIntent().getStringExtra("title");
-        book = repository.getReadBookByTitle(bookTitle);
+        int userId = getIntent().getIntExtra("USER_ID", -1);
+        book = repository.getReadBookByTitle(bookTitle, userId);
 
         if (book == null) {
             binding.displayTitleTextView.setText("Book not found.");
